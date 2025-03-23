@@ -23,8 +23,21 @@ class _MovieContentState extends State<MovieContent> {
   Movie? _selectedMovie;
   double _opacity = 0;
 
-  void _nextPage(BuildContext context) {
-    context.read<MoviesCubit>().getPopularMovies();
+  void _nextPage() => context.read<MoviesCubit>().getPopularMovies();
+
+  Future<void> _pageChanged(Movie movie) async {
+    setState(() {
+      _opacity = 0.0;
+    });
+
+    await Future<void>.delayed(
+      const Duration(milliseconds: 700),
+    );
+
+    setState(() {
+      _selectedMovie = movie;
+      _opacity = 1.0;
+    });
   }
 
   @override
@@ -45,25 +58,15 @@ class _MovieContentState extends State<MovieContent> {
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            MovieDetails(movie: _selectedMovie, opacity: 1),
+            MovieDetails(
+              movie: _selectedMovie,
+              opacity: 1,
+            ),
             const Gap(8),
             MoviesPageView(
               movies: widget.movies,
-              nextPage: () => _nextPage(context),
-              onPageChanged: (movie) async {
-                setState(() {
-                  _opacity = 0.0;
-                });
-
-                await Future<void>.delayed(
-                  const Duration(milliseconds: 700),
-                );
-
-                setState(() {
-                  _selectedMovie = movie;
-                  _opacity = 1.0;
-                });
-              },
+              nextPage: () => _nextPage,
+              onPageChanged: _pageChanged,
             ),
           ],
         ),
