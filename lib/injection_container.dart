@@ -20,5 +20,13 @@ Future<void> init() async {
       () => MoviesRemoteDataSourceImpl(dio: sl<Dio>()),
     )
     // Core
-    ..registerLazySingleton(Dio.new);
+    ..registerLazySingleton(
+      () => Dio(
+        BaseOptions(
+          baseUrl: const String.fromEnvironment('baseUrl', defaultValue: '-'),
+          connectTimeout: const Duration(milliseconds: 15000),
+          contentType: 'application/x-www-form-urlencoded',
+        ),
+      ),
+    );
 }
