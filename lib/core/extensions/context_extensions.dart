@@ -3,7 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kueski_challenge/presentation/states/cubit/movies_cubit.dart';
 export 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-extension GetDeviceTypeX on BuildContext {
+// This function is an extension to the BuildContext that allows
+// to get the names of movie genres from their IDs,
+// regardless of where they are in the app.
+extension GetGenresX on BuildContext {
   List<String> getGenres(List<int> genreIds) {
     final genres = watch<MoviesCubit>().genres;
     if (genres.isEmpty || genreIds.isEmpty) {
