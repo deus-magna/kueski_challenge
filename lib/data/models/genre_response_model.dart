@@ -13,7 +13,7 @@ class GenreResponseModel extends GenreResponse {
 }
 
 class GenreModel extends Genre {
-  GenreModel({
+  const GenreModel({
     required super.id,
     required super.name,
   });

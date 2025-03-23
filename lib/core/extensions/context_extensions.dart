@@ -5,7 +5,7 @@ export 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // This function is an extension to the BuildContext that allows
 // to get the names of movie genres from their IDs,
-// regardless of where they are in the app.
+// regardless of where they are on the app.
 extension GetGenresX on BuildContext {
   List<String> getGenres(List<int> genreIds) {
     final genres = watch<MoviesCubit>().genres;

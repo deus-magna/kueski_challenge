@@ -10,7 +10,7 @@ class GenreResponse extends Equatable {
 }
 
 class Genre extends Equatable {
-  Genre({
+  const Genre({
     required this.id,
     required this.name,
   });

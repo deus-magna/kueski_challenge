@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:kueski_challenge/domain/entities/genre_response.dart';
 import 'package:kueski_challenge/domain/entities/movies_response.dart';
 import 'package:kueski_challenge/domain/repositories/movies_repo.dart';
-import 'package:meta/meta.dart';
 
 part 'movies_state.dart';
 
