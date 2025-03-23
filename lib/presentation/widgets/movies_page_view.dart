@@ -27,6 +27,7 @@ class MoviesPageView extends StatelessWidget {
     _pageController.addListener(() {
       if (_pageController.position.pixels ==
           _pageController.position.maxScrollExtent) {
+        print('next page');
         nextPage();
       }
     });
@@ -34,6 +35,7 @@ class MoviesPageView extends StatelessWidget {
     return SizedBox(
       height: screenSize.height * 0.3,
       child: PageView.builder(
+        pageSnapping: false,
         controller: _pageController,
         itemCount: movies.length,
         itemBuilder: (context, index) => _MovieCard(movie: movies[index]),

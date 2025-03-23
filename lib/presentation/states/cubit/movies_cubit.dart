@@ -17,14 +17,19 @@ class MoviesCubit extends Cubit<MoviesState> {
   final List<Genre> genres = [];
 
   Future<void> getPopularMovies() async {
+    print('nextpage');
     _page++;
     final result = await moviesRepo.getPopular(page: _page);
     result.match(
       (moviesResponse) {
+        print('adding movies');
         _movies.addAll(moviesResponse.movies);
         emit(MoviesSuccess(movies: _movies));
       },
-      (failure) => emit(MoviesError()),
+      (failure) {
+        print('error');
+        emit(MoviesError());
+      },
     );
   }
 
