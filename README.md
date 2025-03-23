@@ -6,8 +6,22 @@
 
 
 
-My new Flutter app
+The task is to implement a small app that will list the most popular movies movies using
+themoviedb.org API. Also, you must see the details of the film.
+You'll be fetching the sorted JSON data directly from the themoviedb.org API (API explained down
+below).
 
+### Features
+- As a User I should be able to list the most popular movies.
+- As a User I should be able to see for each movie the following details:
+    - Name
+    - Poster
+    - Genres
+    - Overview
+    - Release date
+
+### Preview 
+![Preview](ss/ss.png)
 ---
 
 ## Setting up Flutter Environment in Visual Studio Code for Android and iOS Development
