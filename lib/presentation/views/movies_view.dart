@@ -9,34 +9,29 @@ import 'package:kueski_challenge/presentation/widgets/movie_content.dart';
 class MoviesView extends StatelessWidget {
   const MoviesView({super.key});
 
+  MoviesCubit createCubit(BuildContext context) =>
+      MoviesCubit(moviesRepo: sl<MoviesRepo>())..getPopularMovies();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) =>
-          MoviesCubit(moviesRepo: sl<MoviesRepo>())..getPopularMovies(),
-      child:
-          const Scaffold(backgroundColor: Colors.black, body: MoviesContent()),
+      create: createCubit,
+      child: const Scaffold(body: MoviesContent()),
     );
   }
 }
 
-class MoviesContent extends StatefulWidget {
+class MoviesContent extends StatelessWidget {
   const MoviesContent({super.key});
 
   @override
-  State<MoviesContent> createState() => _MoviesContentState();
-}
-
-class _MoviesContentState extends State<MoviesContent> {
-  @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
     return BlocBuilder<MoviesCubit, MoviesState>(
       builder: (context, state) {
         if (state is MoviesSuccess) {
           return MovieContent(movies: state.movies);
         } else if (state is MoviesError) {
-          return Center(child: Text(l10n.error));
+          return Center(child: Text(context.l10n.error));
         } else {
           return const Center(child: CircularProgressIndicator());
         }
