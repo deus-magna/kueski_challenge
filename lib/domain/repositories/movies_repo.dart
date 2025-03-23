@@ -7,5 +7,6 @@ abstract class MoviesRepo {
   /// get popular movies
   Future<Result<MoviesResponse, Failure>> getPopular({required int page});
 
+  /// get the list of genre for the movies
   Future<Result<GenreResponse, Failure>> getGenreList();
 }
