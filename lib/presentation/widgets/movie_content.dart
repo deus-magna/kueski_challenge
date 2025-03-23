@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
 import 'package:kueski_challenge/domain/entities/movies_response.dart';
 import 'package:kueski_challenge/presentation/states/cubit/movies_cubit.dart';
 import 'package:kueski_challenge/presentation/widgets/background_image.dart';
@@ -52,10 +51,10 @@ class _MovieContentState extends State<MovieContent> {
           animatedOpacity: _opacity,
         ),
         Column(
+          spacing: 8,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             MovieDetails(movie: _selectedMovie, opacity: 1),
-            const Gap(8),
             MoviesPageView(
               movies: widget.movies,
               nextPage: _nextPage,
