@@ -4,56 +4,41 @@ import 'package:kueski_challenge/domain/entities/movies_response.dart';
 
 class MovieDetails extends StatelessWidget {
   const MovieDetails({
-    // required this.actors,
     required this.movie,
     required this.opacity,
     super.key,
   });
 
-  // final List<Actor> actors;
   final Movie? movie;
   final double opacity;
-
-  static const _duration = Duration(milliseconds: 800);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       spacing: 10,
       children: [
-        _buildMovieTitle(context),
+        _MovieTitle(movie: movie, opacity: opacity),
         _Details(movie: movie, opacity: opacity),
-        _buildMovieCast(),
-        _buildMovieOverview(context),
+        _MovieOverview(movie: movie, opacity: opacity),
       ],
     );
   }
+}
 
-  Widget _buildMovieCast() {
+class _MovieTitle extends StatelessWidget {
+  const _MovieTitle({
+    required this.movie,
+    required this.opacity,
+  });
+
+  final Movie? movie;
+  final double opacity;
+
+  @override
+  Widget build(BuildContext context) {
     return AnimatedOpacity(
       opacity: opacity,
-      duration: _duration,
-      curve: opacity == 0.0 ? Curves.easeOut : Curves.easeIn,
-      child: const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        child: Text(
-          'utils.getActors(actors),',
-          overflow: TextOverflow.ellipsis,
-          maxLines: 1,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 12,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildMovieTitle(BuildContext context) {
-    return AnimatedOpacity(
-      opacity: opacity,
-      duration: _duration,
+      duration: const Duration(milliseconds: 800),
       curve: opacity == 0.0 ? Curves.easeOut : Curves.easeIn,
       child: Container(
         alignment: Alignment.center,
@@ -73,11 +58,65 @@ class MovieDetails extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildMovieOverview(BuildContext context) {
+class _Details extends StatelessWidget {
+  const _Details({
+    required this.movie,
+    required this.opacity,
+  });
+
+  final Movie? movie;
+  final double opacity;
+
+  @override
+  Widget build(BuildContext context) {
+    const textStyle = TextStyle(
+      color: Colors.white,
+      fontSize: 14,
+    );
     return AnimatedOpacity(
       opacity: opacity,
-      duration: _duration,
+      duration: const Duration(milliseconds: 800),
+      curve: opacity == 0.0 ? Curves.easeOut : Curves.easeIn,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 40),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(movie?.getYear() ?? '', style: textStyle),
+            const Text(
+              '   ⬤   ',
+              style: TextStyle(color: Colors.orange, fontSize: 6),
+            ),
+            Flexible(
+              child: Text(
+                context.getGenres(movie?.genreIds ?? []).join(' '),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                style: textStyle,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _MovieOverview extends StatelessWidget {
+  const _MovieOverview({
+    required this.movie,
+    required this.opacity,
+  });
+
+  final Movie? movie;
+  final double opacity;
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedOpacity(
+      opacity: opacity,
+      duration: const Duration(milliseconds: 800),
       curve: opacity == 0.0 ? Curves.easeOut : Curves.easeIn,
       child: Container(
         alignment: Alignment.center,
@@ -92,58 +131,6 @@ class MovieDetails extends StatelessWidget {
             fontSize: 12,
             fontWeight: FontWeight.bold,
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _Details extends StatelessWidget {
-  const _Details({
-    required this.movie,
-    required this.opacity,
-  });
-
-  final Movie? movie;
-  final double opacity;
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedOpacity(
-      opacity: opacity,
-      duration: const Duration(milliseconds: 800),
-      curve: opacity == 0.0 ? Curves.easeOut : Curves.easeIn,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 40),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              movie?.getYear() ?? '',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-              ),
-            ),
-            const Text(
-              '   ⬤   ',
-              style: TextStyle(
-                color: Colors.yellow,
-                fontSize: 6,
-              ),
-            ),
-            Flexible(
-              child: Text(
-                context.getGenres(movie?.genreIds ?? []).join(' '),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                ),
-              ),
-            ),
-          ],
         ),
       ),
     );
