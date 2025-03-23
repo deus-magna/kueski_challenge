@@ -46,6 +46,8 @@ class Movie extends Equatable {
   final double voteAverage;
   final int voteCount;
 
+  String getYear() => releaseDate.toString().substring(0, 4);
+
   String getPosterImg() {
     if (posterPath == '') {
       return 'http://www.independentmediators.co.uk/wp-content/uploads/2016/02/placeholder-image.jpg';
