@@ -21,7 +21,8 @@ below).
     - Release date
 
 ### Preview 
-![Preview](ss/ss.png)
+ <img src="ss/ss.png" width="350"> 
+
 ---
 
 ## Setting up Flutter Environment in Visual Studio Code for Android and iOS Development
