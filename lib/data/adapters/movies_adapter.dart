@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:kueski_challenge/data/datasources/movies_remote_datasource.dart';
+import 'package:kueski_challenge/domain/entities/genre_response.dart';
 import 'package:kueski_challenge/domain/entities/movies_response.dart';
 import 'package:kueski_challenge/domain/error/failure.dart';
 import 'package:kueski_challenge/domain/repositories/movies_repo.dart';
@@ -15,8 +16,17 @@ class MoviesAdapter extends MoviesRepo {
   }) async {
     try {
       final movies = await moviesRemoteDataSource.getPopular(page: page);
-
       return Ok(movies);
+    } on DioException catch (error) {
+      return Result.err(Failure.fromDio(error));
+    }
+  }
+
+  @override
+  Future<Result<GenreResponse, Failure>> getGenreList() async {
+    try {
+      final genres = await moviesRemoteDataSource.getGenreList();
+      return Ok(genres);
     } on DioException catch (error) {
       return Result.err(Failure.fromDio(error));
     }
