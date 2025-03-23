@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:kueski_challenge/data/models/movies_response_model.dart';
 
 abstract class MoviesRemoteDataSource {
-  Future<void> getPopular({int page = 1});
+  Future<MoviesResponseModel> getPopular({int page = 1});
 }
 
 class MoviesRemoteDataSourceImpl implements MoviesRemoteDataSource {
@@ -9,7 +10,7 @@ class MoviesRemoteDataSourceImpl implements MoviesRemoteDataSource {
   final Dio dio;
 
   @override
-  Future<void> getPopular({int page = 1}) async {
+  Future<MoviesResponseModel> getPopular({int page = 1}) async {
     final response = await dio.get<dynamic>(
       '/discover/movie',
       queryParameters: {
@@ -22,5 +23,6 @@ class MoviesRemoteDataSourceImpl implements MoviesRemoteDataSource {
       },
     );
     print(response.data);
+    return MoviesResponseModel.fromJson(response.data as Map<String, dynamic>);
   }
 }
