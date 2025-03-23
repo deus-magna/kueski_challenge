@@ -20,13 +20,13 @@ class MoviesPageView extends StatefulWidget {
 }
 
 class _MoviesPageViewState extends State<MoviesPageView> {
-  final _pageController = PageController(
-    viewportFraction: 0.4,
-  );
+  final _pageController = PageController(viewportFraction: 0.4);
   int _selectedIndex = 0;
 
   @override
   void initState() {
+    // Listener for pagination, its handle when the page view scroll to the
+    // last item.
     _pageController.addListener(() {
       if (_pageController.position.pixels ==
           _pageController.position.maxScrollExtent) {
@@ -50,10 +50,8 @@ class _MoviesPageViewState extends State<MoviesPageView> {
           isSelected: index == _selectedIndex,
         ),
         onPageChanged: (value) {
-          if (value < widget.movies.length) {
-            _selectedIndex = value;
-            widget.onPageChanged(widget.movies[value]);
-          }
+          _selectedIndex = value;
+          widget.onPageChanged(widget.movies[value]);
         },
       ),
     );
@@ -74,6 +72,7 @@ class _MovieCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(right: 15),
       child: Column(
+        spacing: 5,
         children: <Widget>[
           Container(
             decoration: BoxDecoration(
@@ -89,21 +88,29 @@ class _MovieCard extends StatelessWidget {
                 imageUrl: movie.getPosterImg(),
                 fit: BoxFit.cover,
                 height: 200,
-                progressIndicatorBuilder: (context, url, progress) {
-                  return Shimmer.fromColors(
-                    baseColor: Colors.grey[300]!,
-                    highlightColor: Colors.grey[100]!,
-                    child: Container(
-                      height: 200,
-                      width: 135,
-                      color: Colors.white,
-                    ),
-                  );
-                },
+                progressIndicatorBuilder: (context, url, progress) =>
+                    Shimmer.fromColors(
+                  baseColor: Colors.grey[300]!,
+                  highlightColor: Colors.grey[100]!,
+                  child: Container(
+                    height: 200,
+                    width: 135,
+                    color: Colors.white,
+                  ),
+                ),
+                errorWidget: (context, url, error) => Container(
+                  height: 200,
+                  width: 135,
+                  color: Colors.white,
+                  child: const Icon(
+                    Icons.error,
+                    color: Colors.red,
+                    size: 48,
+                  ),
+                ),
               ),
             ),
           ),
-          const SizedBox(height: 5),
           Text(
             movie.title,
             overflow: TextOverflow.ellipsis,
